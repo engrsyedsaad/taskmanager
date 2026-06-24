@@ -1,5 +1,5 @@
 const createbtn = document.querySelector(".createbtn")
-const createProduct = document.querySelector(".create")
+const createTask = document.querySelector(".create")
 const closebtn = document.querySelector(".closebtn")
 const form = document.querySelector("form")
 const taskDiv = document.querySelector(".task-div")
@@ -7,71 +7,75 @@ const taskDiv = document.querySelector(".task-div")
 
 
 const taskArr = []
+let updateTask= null;
 
 function ui() {
     taskDiv.innerHTML = "";
     taskArr.forEach((elem, index) => {
-        if (elem.checked === high) {
+        
            taskDiv.innerHTML+=`<div class="task">
-                <h3>${elem.taskTittle}</h3>
-                <h4>Piroirty:${elem.high}</h4>
-                <p>${elem.}</p>
+                <h3>${elem.taskTitle}</h3>
+                <h5>Piroirty: ${elem.priority}</h5>
+                <p>${elem.description}</p>
                 <div class="btndiv">
-                    <button class="button edit">edit</button>
+                    <button  onclick="taskEdit('${elem.taskTitle}')" class="button edit">edit</button>
                     <button class="complete button">Complete</button>
-                    <button class="button del">delete</button>
+                    <button onclick="deleteTask(${index})" class="button del">delete</button>
                 </div>
             </div>`
-        }
 
-
-
-        // taskDiv.innerHTML += ` <div class="product">
-        // <h3>${elem.taskTittle}</h3>
-        // <p>${elem.description}</p>
-        // <div class="btndiv">
-        //             <button class="button edit">edit</button>
-        //             <button class="button complete>complete</button>
-        //             <button class="button del">delete</button>
-        //         </div>
-        //     </div>`
     })
 }
 
 
 createbtn.addEventListener("click", () => {
-    createProduct.style.display = "flex"
+    createTask.style.display = "flex"
 
 })
 form.addEventListener("submit", (e) => {
     e.preventDefault()
-    let taskTittle = e.target[0].value
+    let taskTitle = e.target[0].value
     let description = e.target[1].value
-    let high = e.target[2].checked
-    let medium = e.target[3].checked
-    let low = e.target[4].checked
+    let priority = document.querySelector('input[name="pi"]:checked').value;
 
 
 
     let obj = {
-        taskTittle,
+        taskTitle,
         description,
-        high,
-        medium,
-        low
+        priority
     }
-    console.log(obj)
-    taskArr.push(obj)
+    if(updateTask != null){
+        taskArr[updateTask]=obj
+        updateTask=null
+    }
+    else{
+        taskArr.push(obj)
 
-    createProduct.style.display = "none"
+    }
+    createTask.style.display = "none"
     ui()
-
     form.reset()
 })
 
 
 
 closebtn.addEventListener("click", () => {
-    createProduct.style.display = "none"
+    createTask.style.display = "none"
 
 })
+
+const taskEdit = (task)=>{
+    createTask.style.display="flex"
+    const editTask = taskArr.find(elem=>elem.taskTitle===task)
+    updateTask = taskArr.findIndex(elem=>elem.taskTitle ===task)
+        form[0].value=editTask.taskTitle
+        form[1].value=editTask.description
+        // form[2].value=editTask.priority
+}
+
+const deleteTask=(index)=>{
+
+    taskArr.splice(index,1)
+    ui()
+}
