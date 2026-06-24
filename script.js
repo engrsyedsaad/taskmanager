@@ -3,10 +3,14 @@ const createTask = document.querySelector(".create")
 const closebtn = document.querySelector(".closebtn")
 const form = document.querySelector("form")
 const taskDiv = document.querySelector(".task-div")
-
+const completebtn = document.querySelector(".com")
+const completeDiv = document.querySelector(".completed")
+const complete = document.querySelector(".completedtask")
+const closeCompleteTask =document.querySelector(".taskclose")
 
 
 const taskArr = []
+const completeTask=[]
 let updateTask= null;
 
 function ui() {
@@ -19,7 +23,7 @@ function ui() {
                 <p>${elem.description}</p>
                 <div class="btndiv">
                     <button  onclick="taskEdit('${elem.taskTitle}')" class="button edit">edit</button>
-                    <button class="complete button">Complete</button>
+                    <button onclick="completeTaskList('${elem.taskTitle}')" class="complete button">Complete</button>
                     <button onclick="deleteTask(${index})" class="button del">delete</button>
                 </div>
             </div>`
@@ -30,7 +34,7 @@ function ui() {
 
 createbtn.addEventListener("click", () => {
     createTask.style.display = "flex"
-
+    completeDiv.style.display = "none"
 })
 form.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -77,5 +81,43 @@ const taskEdit = (task)=>{
 const deleteTask=(index)=>{
 
     taskArr.splice(index,1)
+    completeTask.splice(index,1)
     ui()
+    ui2()
 }
+
+completebtn.addEventListener("click",()=>{
+    completeDiv.style.display="flex"
+     createTask.style.display = "none"
+     ui2()
+    
+})
+
+
+
+
+const completeTaskList=(task)=>{
+    const completedTask = taskArr.find(elem=>elem.taskTitle===task)
+    completeTask.push(completedTask)
+    console.log(completeTask)
+    taskArr.splice(completedTask,1)
+    ui()
+
+}
+const ui2=()=>{
+    complete.innerHTML=""
+    completeTask.forEach((elem,index)=>{  
+        complete.innerHTML +=`  <div class="task">
+                <h3>${elem.taskTitle} </h3>
+                <h5>Piroirty: ${elem.priority}</h5>
+                <p>${elem.description}</p>
+                <div class="btndiv">
+                    <button onclick="deleteTask(${index})" class="button del">delete</button>
+                </div>
+            </div>`
+    })
+}
+
+closeCompleteTask.addEventListener("click",()=>{
+      completeDiv.style.display = "none"
+})
