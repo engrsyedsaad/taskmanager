@@ -8,7 +8,6 @@ const completeDiv = document.querySelector(".completed")
 const complete = document.querySelector(".completedtask")
 const closeCompleteTask =document.querySelector(".taskclose")
 
-
 const taskArr = []
 const completeTask=[]
 let updateTask= null;
