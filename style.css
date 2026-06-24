@@ -43,6 +43,12 @@ main{
     color: white;
     text-transform: uppercase;
 }
+.nav h2{
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
 
 .task-div{
     width: 100%;
@@ -191,4 +197,45 @@ form button:hover{
 }
 .close h2:hover{
     color: blue;
+}
+
+
+/* ****************************************************************** */
+ /* complete task in css :start */
+
+/* *******************************************************************
+*/
+
+
+.completed{
+    width: 100%;
+    height: 85%;
+    background-color: rgba(0, 0, 0, 0.762);
+    backdrop-filter: blur(15px);
+    position: absolute;
+    top: 15%;
+    left: 0;
+    display: none;
+    padding: 20px;
+    flex-direction: column;
+ }
+.taskarea{
+    display: flex;
+    justify-content: space-between;
+}
+
+.completedtask{
+    width: 100%;
+    height: 100%;
+    background-color:transparent;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.taskarea h2 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 600;
+    cursor: pointer;
 }
